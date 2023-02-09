@@ -9,7 +9,7 @@ public class Main {
         br.readLine(); // 첫 라인에 들어가는 숫자 :: 쓰지 않음
         String[] strNums = br.readLine().split(" ");
 
-        // int[] 배열 저장
+        // doulb[] 배열 저장
         double[] originNums = Arrays.stream(strNums)
                 .mapToDouble(Double::parseDouble)
                 .toArray();
