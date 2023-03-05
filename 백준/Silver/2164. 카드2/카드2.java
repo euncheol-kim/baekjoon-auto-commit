@@ -1,35 +1,27 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        BufferedReader sr =  new BufferedReader(new InputStreamReader(System.in));
-        Integer num = Integer.parseInt(sr.readLine());
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader( new InputStreamReader(System.in));
 
-        Integer result = getLastCard(num);
-        System.out.println(result);
-    }
+        // 1 <= n <= 500,000 [Input 1Line]
+        int n = Integer.parseInt(br.readLine());
 
-    public static Integer getLastCard(int num) {
-        Deque<Integer> deque = new LinkedList<>();
+        /* 변수 설정 */
+        Queue<Integer> queue = new LinkedList<>();
 
-        for(int i = 0; i < num; i++) {
-            deque.add(i+1);
+        for(int i = 1; i <= n; i++) {
+            queue.add(i);
         }
 
-        int cnt = 1;
-        while(!(deque.size() == 1)) {
-            if(cnt % 2 == 1) {
-                deque.removeFirst();
-            } else {
-                deque.addLast(deque.removeFirst());
-            }
-
-            cnt ++;
+        while(queue.size() != 1) {
+            queue.remove();
+            queue.add(queue.poll());
         }
 
-        return deque.remove();
+        System.out.println(queue.peek());
     }
 }
