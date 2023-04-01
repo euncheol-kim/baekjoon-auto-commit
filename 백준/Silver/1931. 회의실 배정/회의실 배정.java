@@ -40,16 +40,16 @@ public class Main {
                 int curSubTime = cur.end - cur.start;
 
                 // curSubTime이 0이라는 것은 회의가 시작과 동시에 끝남을 의미한다.
-                if(curSubTime == 0 && prev.end <= cur.end) {
+                if(curSubTime == 0 && prev.end == cur.end) {
                     cnt ++;
                     prev = cur;
 
-                // 만약, 현재 회의 시간이 더 작더라면, 현재 회의를 기준으로 하여금 이후의 회의 시간들과 판별 될 수 있도록 한다.
+                // 만약, 현재 회의 시간이 더 작으면, 현재 회의를 기준으로 하여금 이후의 회의 시간들과 판별 될 수 있도록 한다.
                 } else if(prevSubTime > curSubTime) {
                     prev = cur;
                 }
             // 만약, 현재 회의 시간이 이전 회의 시간 안에 존재하지 않는 경우라면
-            } else if (prev.start > cur.start || prev.end < cur.end) {
+            } else {
                 // 현재 회의 시간의 start가 이전 회의 시간 end와 같거나 큰 경우에 대하여 cnt를 높인다.
                 if(cur.start >= prev.end) {
                     cnt ++;
