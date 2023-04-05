@@ -44,7 +44,6 @@ public class Main {
     public static void bfs(int node, int depth, int n) {
         Queue<Integer> queue = new LinkedList<>();
         int[] dist = new int[n + 1];
-        Arrays.fill(dist, -1);
         dist[node] = 0;
         visited[node] = true;
         queue.offer(node);
