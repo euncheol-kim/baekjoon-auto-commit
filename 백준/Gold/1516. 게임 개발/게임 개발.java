@@ -32,17 +32,22 @@ public class Main {
                 queue.offer(i);
             }
         }
+        
         int[] result = new int[N + 1];
         while (!queue.isEmpty()) {
             int now = queue.poll();
             for (int next : A.get(now)) {
                 indegree[next]--;
+                /*선행되어야 하는 건물을 모두 짓는 데 필요한 최소 시간은, 
+                해당 건물을 짓기 위해 필요한 시간과 
+                선행되어야 하는 건물들을 모두 짓는 데 필요한 최소 시간 중 큰 값입니다.*/
                 result[next] = Math.max(result[next], result[now] + selfBuild[now]);
                 if (indegree[next] == 0) {
                     queue.offer(next);
                 }
             }
         }
+        
         for (int i = 1; i <= N; i++) {
             System.out.println(result[i] + selfBuild[i]);
         }
