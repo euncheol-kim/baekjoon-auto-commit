@@ -1,30 +1,19 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Integer condition = Integer.parseInt(br.readLine());
-        BigInteger originNum = new BigInteger(br.readLine());
+        String numCount = br.readLine();
+        String nums = br.readLine();
 
-        BigInteger[] nums = new BigInteger[condition];
-
-        BigInteger digit = BigDecimal.valueOf(Math.pow(10, condition - 1)).toBigInteger();
-
-        for(int i = 0; i < nums.length; i++) {
-            nums[i] = originNum.divide(digit);
-            originNum = originNum.subtract( nums[i].multiply(digit));
-            digit = digit.divide(BigDecimal.valueOf(10).toBigInteger());
+        long result = 0;
+        for(int i = 0; i < Integer.parseInt(numCount); i++) {
+            int num = Character.getNumericValue(nums.charAt(i));
+            result += num;
         }
 
-        BigInteger result = new BigInteger("0");
-
-        for(BigInteger e : nums) {
-            result = result.add(e);
-        }
-
-        System.out.println(result);
+        System.out.print(result);
     }
 }
