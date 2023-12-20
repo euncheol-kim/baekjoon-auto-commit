@@ -1,31 +1,33 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        int result = 0;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Integer N = Integer.parseInt(br.readLine());
-        Integer M = Integer.parseInt(br.readLine());
-        String[] strUnique = br.readLine().split(" ");
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        int[] nums = Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        Arrays.sort(nums);
 
-        // set 타입 생성 후, strUnique를 Integer로 변환하여 set 타입에 저장
-        Set<Integer> set = new LinkedHashSet<>();
-        for(int i = 0; i < N; i++) {
-            set.add(Integer.parseInt(strUnique[i]));
-        }
-
-        for(Integer e : set) {
-            int temp = M - e;
-            if(set.contains(temp)) {
+        int head = 0;
+        int tail = nums.length-1;
+        int result = 0;
+        while(head != tail) {
+            if(nums[head] + nums[tail] == M) {
                 result ++;
+                tail --;
+            } else if(nums[head] + nums[tail] > M) {
+                tail --;
+            } else {
+                head ++;
             }
         }
 
-        System.out.println(result / 2);
+        System.out.println(result);
     }
 }
