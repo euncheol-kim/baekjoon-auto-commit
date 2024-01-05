@@ -5,23 +5,19 @@ import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        BufferedReader br = new BufferedReader( new InputStreamReader(System.in));
-
-        // 1 <= n <= 500,000 [Input 1Line]
-        int n = Integer.parseInt(br.readLine());
-
-        /* 변수 설정 */
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
         Queue<Integer> queue = new LinkedList<>();
 
-        for(int i = 1; i <= n; i++) {
+        for(int i = 1; i <= N; i++) {
             queue.add(i);
         }
 
         while(queue.size() != 1) {
             queue.remove();
-            queue.add(queue.poll());
+            queue.add(queue.remove());
         }
 
-        System.out.println(queue.peek());
+        System.out.println(queue.element());
     }
 }
