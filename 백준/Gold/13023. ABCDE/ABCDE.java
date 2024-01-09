@@ -1,47 +1,66 @@
+import java.io.*;
 import java.util.*;
+
 public class Main {
-  static boolean visited[];
-  static ArrayList<Integer>[] A;
-  static boolean arrive;
-  public static void main(String[] args) {
-    int N; // 정점의 수
-    int M; // 간선의 수
-    arrive = false;
-    Scanner scan = new Scanner(System.in);
-    N = scan.nextInt();
-    M = scan.nextInt();
-    A = new ArrayList[N];
-    visited = new boolean[N];
-    for (int i = 0; i < N; i++) {
-      A[i] = new ArrayList<Integer>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] NM = Arrays.stream(br.readLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        int N = NM[0];
+        int M = NM[1];
+
+        ArrayList<Integer>[] adjacencyList = new ArrayList[N];
+        boolean[] visited = new boolean[N];
+
+        for(int i=0; i < adjacencyList.length; i++) {
+            adjacencyList[i] = new ArrayList<>();
+        }
+
+        while(M-- > 0) {
+            int[] AB = Arrays.stream(br.readLine().split(" "))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+
+            int A = AB[0];
+            int B = AB[1];
+
+            adjacencyList[A].add(B);
+            adjacencyList[B].add(A);
+        }
+
+        boolean condition = false;
+        for(int i=0; i < visited.length; i++) {
+            condition = operatedDFS(visited, adjacencyList, i, 1);
+            if(condition) break;
+        }
+
+        if(condition) System.out.println(1);
+        else System.out.println(0);
     }
-    for (int i = 0; i < M; i++) {
-      int S = scan.nextInt();
-      int E = scan.nextInt();
-      A[S].add(E);
-      A[E].add(S);
+
+    public static boolean operatedDFS(boolean[] visited,
+                              ArrayList<Integer>[] adjacencyList,
+                              int node,
+                              int depth) {
+
+        if(depth >= 5) return true;
+
+        visited[node] = true;
+
+        for(int e : adjacencyList[node]) {
+            boolean condition = false;
+
+            // 방문하지 않은 경우라면
+            if(!visited[e]) {
+                condition = operatedDFS(visited, adjacencyList, e, depth + 1);
+                if(condition) return true;
+            }
+        }
+
+        visited[node] = false;
+        depth -= 1;
+
+        return false;
     }
-    for (int i = 0; i < N; i++) {
-      DFS(i, 1);
-      if (arrive)
-        break;
-    }
-    if (arrive)
-      System.out.println("1");
-    else
-      System.out.println("0"); // 5의 깊이가 없다면 0 출력
-  }
-  public static void DFS(int now, int depth) { // DFS구현
-    if (depth == 5) { // 깊이가 5가되면 프로그램 종료
-      arrive = true;
-      return;
-    }
-    visited[now] = true;
-    for (int i : A[now]) {
-      if (!visited[i]) {
-        DFS(i, depth + 1);
-      }
-    }
-    visited[now] = false;
-  }
 }
